@@ -6,7 +6,7 @@ import New from "@/views/New.vue";
 export const router = createRouter({
         history: createWebHistory(),
         routes: [
-            {path: '/', component: Tasks},
+            {path: '/tasks', component: Tasks, alias: '/'},
             {path: '/create', component: New},
             {path: '/task', component: Task},
         ],
