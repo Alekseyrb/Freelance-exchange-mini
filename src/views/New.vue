@@ -22,4 +22,7 @@
 
 
 <script>
+export default {
+
+}
 </script>
