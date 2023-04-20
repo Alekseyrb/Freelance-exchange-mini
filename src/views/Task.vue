@@ -1,16 +1,17 @@
 <template>
   <div class="card" v-if="task">
     <h2>{{ task.title }}</h2>
+    <h1>{{statusTask}}</h1>
     <p><strong>Статус</strong>:
-      <AppStatus :type="'done'"/>
+      <AppStatus :type="statusTask"/>
     </p>
-<!--    <p><strong>Дэдлайн</strong>: {{ new Date().toLocaleDateString() }}</p>-->
+    <!--    <p><strong>Дэдлайн</strong>: {{ new Date().toLocaleDateString() }}</p>-->
     <p><strong>Дэдлайн</strong>: {{ task.data }}</p>
     <p><strong>Описание</strong>: {{ task.text }}</p>
     <div>
-      <button class="btn">Взять в работу</button>
-      <button class="btn primary">Завершить</button>
-      <button class="btn danger">Отменить</button>
+      <button class="btn" @click="changeStatus('pending')">Взять в работу</button>
+      <button class="btn primary" @click="changeStatus('done')">Завершить</button>
+      <button class="btn danger" @click="changeStatus('cancelled')">Отменить</button>
     </div>
   </div>
   <h3 class="text-white center" v-else>
@@ -20,7 +21,7 @@
 
 <script>
 import AppStatus from '../components/AppStatus.vue'
-import {computed} from "vue";
+import {ref, computed} from "vue";
 import {useStore} from "vuex";
 import {useRouter, useRoute} from "vue-router";
 
@@ -33,9 +34,25 @@ export default {
     const tasks = store.getters.allTask;
 
     const task = computed(() => tasks.find(e => e.id === parseInt(route.params.taskId)));
-    console.log(task);
+    const statusTask = ref(task.value.status);
+    console.log(task.value.status);
+
+    function changeStatus(status) {
+      statusTask.value = status;
+      console.log(status);
+      console.log(statusTask.value);
+      store.commit('changeStatus', {
+        id: task.value.id,
+        status,
+      });
+    }
+    console.log(statusTask.value);
+
+
     return {
       task,
+      changeStatus,
+      statusTask,
     }
   },
   components: {AppStatus}

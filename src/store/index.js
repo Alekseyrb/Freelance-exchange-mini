@@ -17,11 +17,16 @@ export default createStore({
     mutations: {
         addNewTask(state, payload) {
             state.tasks.push(payload);
-        }
+        },
+        changeStatus(state, payload) {
+            state.tasks[payload.id].status = payload.status;
+            console.log(state.tasks);
+        },
     },
     getters: {
         allTask(state) {
             return state.tasks;
-        }
-    }
+        },
+
+    },
 });
