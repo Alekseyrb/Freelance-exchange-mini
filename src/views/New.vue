@@ -34,8 +34,10 @@ export default {
     const data = ref('');
     const text = ref('');
 
+    console.log(store.state.tasks[store.state.tasks.length - 1].id + 1);
     function addNewTask() {
       store.commit('addNewTask', {
+        id: store.state.tasks[store.state.tasks.length - 1].id + 1,
         title: title.value,
         data: data.value,
         text: text.value,

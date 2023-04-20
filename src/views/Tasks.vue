@@ -2,7 +2,7 @@
   <h1 class="text-white center" v-if="!tasks">Задач пока нет</h1>
   <div v-else>
     <h3 class="text-white">Всего активных задач: 0</h3>
-    <div class="card" v-for="task in tasks">
+    <div class="card" v-for="(task, id) in tasks" :key="id">
       <h2 class="card-title">
         {{ task.title }}
         <AppStatus :type="'done'"/>
@@ -14,7 +14,7 @@
           </small>
         </strong>
       </p>
-      <router-link to="/task">
+      <router-link :to="'/task/' + id">
         <button class="btn primary">Посмотреть</button>
       </router-link>
     </div>
@@ -32,8 +32,8 @@ export default {
 
     const tasks = store.state.tasks;
 
-    console.log(tasks);
-    console.log(tasks[0].title);
+    // console.log(tasks);
+    // console.log(tasks[0].title);
     return {
       tasks: tasks,
     }

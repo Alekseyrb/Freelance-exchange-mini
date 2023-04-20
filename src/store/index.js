@@ -5,10 +5,11 @@ export default createStore({
         return {
             tasks: [
                 {
-                    title: '',
-                    status: '',
+                    id: 0,
+                    title: 'alex',
+                    status: 'active',
                     data: '',
-                    text: '',
+                    text: 'lololololo',
                 }
             ],
         }
@@ -16,6 +17,11 @@ export default createStore({
     mutations: {
         addNewTask(state, payload) {
             state.tasks.push(payload);
+        }
+    },
+    getters: {
+        allTask(state) {
+            return state.tasks;
         }
     }
 });
