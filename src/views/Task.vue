@@ -1,7 +1,6 @@
 <template>
   <div class="card" v-if="task">
     <h2>{{ task.title }}</h2>
-    <h1>{{statusTask}}</h1>
     <p><strong>Статус</strong>:
       <AppStatus :type="statusTask"/>
     </p>
@@ -29,24 +28,22 @@ import {useRouter, useRoute} from "vue-router";
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
     const route = useRoute();
 
     const tasks = store.getters.allTask;
 
     const task = computed(() => tasks.find(e => e.id === parseInt(route.params.taskId)));
     const statusTask = ref(task.value.status);
-    console.log(task.value.status);
 
     function changeStatus(status) {
       statusTask.value = status;
-      console.log(status);
-      console.log(statusTask.value);
       store.commit('changeStatus', {
         id: task.value.id,
         status,
       });
+      router.push('/tasks');
     }
-    console.log(statusTask.value);
 
 
     return {

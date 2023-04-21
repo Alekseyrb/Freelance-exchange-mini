@@ -27,6 +27,10 @@ export default createStore({
         allTask(state) {
             return state.tasks;
         },
+        activeTask(state) {
+            if (state.tasks) {
 
+            }
+        }
     },
 });

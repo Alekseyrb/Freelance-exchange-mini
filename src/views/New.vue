@@ -25,6 +25,7 @@
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 import {ref, computed} from "vue";
+
 export default {
   setup() {
     const store = useStore();
@@ -35,14 +36,33 @@ export default {
     const text = ref('');
 
     console.log(store.state.tasks[store.state.tasks.length - 1].id + 1);
+
+    let today = new Date();
+    let dateFuture;
+    let currentDate;
+    let statusDate = 'active';
+
+
     function addNewTask() {
+      dateFuture = data.value.replace(/-/g, " ").split(' ').map((e) => {
+        return parseInt(e);
+      });
+      currentDate = today.toLocaleDateString().replace(/\./g, ' ').split(' ').map((e) => {
+        return parseInt(e);
+      });
+
+      if (dateFuture[0] < currentDate[2] || dateFuture[1] < currentDate[1] || dateFuture[2] < currentDate[0]) {
+        statusDate = 'cancelled';
+      }
+
       store.commit('addNewTask', {
         id: store.state.tasks[store.state.tasks.length - 1].id + 1,
         title: title.value,
         data: data.value,
         text: text.value,
-        status: 'active',
+        status: statusDate,
       });
+
       console.log(store.state.tasks);
       title.value = '';
       data.value = '';
